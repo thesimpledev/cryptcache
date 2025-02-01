@@ -36,6 +36,8 @@ A vault to manage sensitive information such as API keys and credentials in a wa
 - [ ] `cryptcache export --private-key=priv.key > .env`
 - [ ] `cryptcache --verify`
 - [ ] `cryptcache --verify-secret fieldname`
+- [ ] Export to ENV file
+- [ ] Let users define encryption standard
 
 ## Example File
 
