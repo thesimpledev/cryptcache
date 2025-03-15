@@ -2,6 +2,8 @@
 
 I have used solutions such as AWS Secret Manager in the past. However, for small projects, I often prefer a simple solution—a local file that can securely store secrets and be safely checked into version control and easily run locally. I looked at [SOPS](https://blog.gitguardian.com/a-comprehensive-guide-to-sops/) and while it does a lot of what I wanted, it doesn't do everything. I wanted the ability to have various profiles with unique keys. I wanted CI/CD and SOPS is not a secrets manager. Usually even if it is a personal project I want a production, beta, and local environment available. So I decided to write my own.
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/thesimpledev/cryptcache)](https://goreportcard.com/report/github.com/thesimpledev/cryptcache)
+
 ## Security
 
 CryptCache is designed to be reasonably secure. Some may argue that providing attackers with access to encrypted secrets inherently compromises security. However, my counterargument is that if modern encryption standards cannot safeguard shared secrets, the problem extends far beyond this secret manager and reflects fundamental vulnerabilities in current asymmetric encryption standards.
