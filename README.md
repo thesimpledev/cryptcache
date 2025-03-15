@@ -4,6 +4,8 @@ I have used solutions such as AWS Secret Manager in the past. However, for small
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/thesimpledev/cryptcache)](https://goreportcard.com/report/github.com/thesimpledev/cryptcache)
 
+[![Coverage Status](https://coveralls.io/repos/github/thesimpledev/cryptcache/badge.svg?branch=master)](https://coveralls.io/github/thesimpledev/cryptcache?branch=master)
+
 ## Security
 
 CryptCache is designed to be reasonably secure. Some may argue that providing attackers with access to encrypted secrets inherently compromises security. However, my counterargument is that if modern encryption standards cannot safeguard shared secrets, the problem extends far beyond this secret manager and reflects fundamental vulnerabilities in current asymmetric encryption standards.
