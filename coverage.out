@@ -1,8 +1,8 @@
 mode: set
-github.com/thesimpledev/cryptcache/cmd/cli/main.go:9.13,12.23 2 0
-github.com/thesimpledev/cryptcache/cmd/cli/main.go:12.23,16.3 2 0
-github.com/thesimpledev/cryptcache/cmd/cli/main.go:18.2,18.22 1 0
-github.com/thesimpledev/cryptcache/cmd/cli/main.go:18.22,22.3 2 0
-github.com/thesimpledev/cryptcache/cmd/cli/main.go:24.2,24.21 1 0
-github.com/thesimpledev/cryptcache/cmd/cli/main.go:24.21,27.3 1 0
-github.com/thesimpledev/cryptcache/internal/flags/flags.go:19.25,37.2 14 1
+github.com/thesimpledev/cryptcache/cmd/cli/main.go:9.13,29.2 1 0
+github.com/thesimpledev/cryptcache/internal/commands/commands.go:23.25,41.2 14 1
+github.com/thesimpledev/cryptcache/internal/commands/commands.go:43.39,44.23 1 0
+github.com/thesimpledev/cryptcache/internal/commands/commands.go:44.23,47.3 2 0
+github.com/thesimpledev/cryptcache/internal/commands/commands.go:48.2,50.20 2 0
+github.com/thesimpledev/cryptcache/internal/commands/commands.go:51.14,58.49 7 0
+github.com/thesimpledev/cryptcache/internal/commands/commands.go:59.10,60.49 1 0
