@@ -19,6 +19,8 @@ func newApplication() application {
 
 	var nouns = map[string]func(string, []string){
 		"project": projectHandler,
+		"profile": profileHandler,
+		"secret":  secretHandler,
 	}
 
 	app := &application{
@@ -44,10 +46,6 @@ func (app *application) parse() {
 
 	app.logger.Error("Invalid Command")
 	os.Exit(1)
-
-}
-
-func projectHandler(verb string, args []string) {
 
 }
 
