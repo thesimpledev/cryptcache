@@ -48,12 +48,14 @@ A vault to manage sensitive information such as API keys and credentials in a wa
 ```TOML
 title = "Crypt Cache"
 
-[Production.secrets.username]
-value = "Jl2jklwejl203rjle=="
+[Production.username]
+value = "admin"
+encrypted = false
 hmac  = "9df2a160e6c14a15bcd1a9dc2b18e1cf1f003f8ef14ab4cf2c3ef0f0605d7c6b"
 
-[Production.secrets.password]
+[Production.password]
 value = "kJlweiur82ljslakdj=="
+encrypted = true
 hmac  = "7c3f39e9c5df2e65dff9e8d41e1cf2b3ef57a63a12e01452db6ef7df8f7a09c8"
 
 [file.metadata]
