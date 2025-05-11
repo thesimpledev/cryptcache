@@ -14,6 +14,12 @@ CryptCache is designed to be reasonably secure. Some may argue that providing at
 
 A vault to manage sensitive information such as API keys and credentials in a way that will allow for local deployment, version control integration, and secure usage during deployment.
 
+## Design Decisions
+
+You may notice a disconnect between how users enter commands and code organization and this is intentional.
+
+It is easier for users to remember a `verb noun` command structure so `create profile` instead of `profile create`, however, when organizing code it makes more sense to organize it as `noun verb` so nouns are at the top level with supporting verbs. While this is a bit more cognitive load in developing I feel it makes the system more user friendly.
+
 ## Planned work
 
 - [ ] Store secrets in a plain text TOML file with encrypted values

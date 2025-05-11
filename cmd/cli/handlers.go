@@ -7,23 +7,25 @@ import (
 )
 
 type project struct {
-	name             string
-	profile          string
-	private_key_path string
-	public_key_path  string
+	name        string
+	profile     string
+	private_key string
+	public_key  string
 }
 
 type profile struct {
-	name             string
-	private_key_path string
-	public_key_path  string
-	private_key      string
-	public_key       string
+	name        string
+	private_key string
+	public_key  string
 }
 
 type secret struct {
-	key   string
-	value string
+	key         string
+	value       string
+	encrypt     bool
+	private_key string
+	public_key  string
+	profile     string
 }
 
 func projectHandler(verb string, args []string) error {
@@ -35,13 +37,20 @@ func projectHandler(verb string, args []string) error {
 
 	fs.StringVar(&projectOptions.name, "n", "", "Project Name")
 	fs.StringVar(&projectOptions.profile, "p", "", "Initial Profile Name")
-	fs.StringVar(&projectOptions.private_key_path, "pk", "", "Private Key Path")
-	fs.StringVar(&projectOptions.public_key_path, "pub", "", "Public Key Path")
+	fs.StringVar(&projectOptions.private_key, "pk", "", "Private Key Path")
+	fs.StringVar(&projectOptions.public_key, "pub", "", "Public Key Path")
 
-	if err := fs.Parse(args); err != nil {
-		return fmt.Errorf("failed to parse flags: %w", err)
+	fs.Usage = func() {
+		fmt.Println("Usage for: cryptcache project", verb)
+		fs.PrintDefaults()
 	}
 
+	if err := fs.Parse(args); err != nil {
+		if errors.Is(err, flag.ErrHelp) {
+			return nil // Showed help, don’t treat as a failure
+		}
+		return fmt.Errorf("failed to parse flags: %w", err)
+	}
 	if projectOptions.name == "" {
 		return errors.New("project name cannot be empty set with -n flag")
 	}
@@ -50,11 +59,11 @@ func projectHandler(verb string, args []string) error {
 		return errors.New("profile name cannot be empty set with -p flag")
 	}
 
-	if projectOptions.private_key_path == "" {
+	if projectOptions.private_key == "" {
 		return errors.New("profile Ed25519 private key path cannot be empty set with -pk flag")
 	}
 
-	if projectOptions.public_key_path == "" {
+	if projectOptions.public_key == "" {
 		return errors.New("profile Ed25519 public key cannot be empty set with -pub flag")
 	}
 
@@ -72,25 +81,41 @@ func profileHandler(verb string, args []string) error {
 		return fmt.Errorf("no Project Found")
 	}
 
-	//add check value in so only the same key can modify this profile
-	//When updating key reencrypt all values
+	profileOptions := &profile{}
+	fs := flag.NewFlagSet("project-"+verb, flag.ExitOnError)
+
+	fs.StringVar(&profileOptions.name, "n", "", "Profile Name")
+	fs.StringVar(&profileOptions.private_key, "pk", "", "Ed25519 Private Encryption Key")
+	fs.StringVar(&profileOptions.public_key, "pub", "", "Ed25519 Public Encryption Key")
+
+	if err := fs.Parse(args); err != nil {
+		return fmt.Errorf("failed to parse flags: %w", err)
+	}
+
+	//TODO: Add check value so only the same key can modify the profile outside of rotate
 
 	switch verb {
 	case "create":
+		//TODO: Create New Profile
 		return nil
-	case "update":
-		//update public and private keys
+	case "rotate":
+		//TODO: Roatete Encryption Keys, Update all Signatures and Values in Profile
 		return nil
 	case "delete":
+		//TODO: Delete profile requires private key
 		return nil
 	case "export":
+		//TODO: Export to .env requires public key
+		//Will expand to other exports in the future
 		return nil
 	case "diff":
-		return nil
-	case "load-pk":
-		//load private key into memory
+		//TODO: Compare two profiles to see missing keys
 		return nil
 	case "verify":
+		//TODO: Verify Profiles Cryptographic Signature
+		return nil
+	case "set":
+		//TODO: Set Active Profile
 		return nil
 	default:
 		return fmt.Errorf("unknown profile verb %s", verb)
@@ -104,28 +129,43 @@ func secretHandler(verb string, args []string) error {
 		return fmt.Errorf("no Project Found")
 	}
 
-	//encrypted vs not encrypted
+	secretOptions := &secret{}
+	fs := flag.NewFlagSet("secret-"+verb, flag.ExitOnError)
+
+	fs.StringVar(&secretOptions.key, "k", "", "Secret Key Name")
+	fs.StringVar(&secretOptions.value, "v", "", "Secret Value")
+	fs.BoolVar(&secretOptions.encrypt, "e", true, "Encrypt Secret - default true")
+
+	fs.StringVar(&secretOptions.profile, "n", "", "Profile Name if not set or to override set")
+	fs.StringVar(&secretOptions.public_key, "pub", "", "Ed25519 Public Key if not set or to override set")
+	fs.StringVar(&secretOptions.private_key, "pk", "", "Ed25519 Private key if not set or to override set")
+
+	if err := fs.Parse(args); err != nil {
+		return fmt.Errorf("failed to parse flags: %w", err)
+	}
+
 	//encryption is a protected namespace
+	//Private and Public Key Optional if set in profile
+	//Has to have an active profile set or profile name passed in
 
 	switch verb {
 	case "create":
+		//TODO: Create new Secret (Encrypted or Unencrypted)
 		return nil
 	case "update":
-		//update public and private keys
+		//TODO: Update Secrete
 		return nil
 	case "delete":
+		//TODO: Delete Secret - Requires private key
 		return nil
 	case "view":
-		return nil
-	case "diff":
-		return nil
-	case "load-pk":
-		//load private key into memory
+		//TODO: View Secret - Requires public key
 		return nil
 	case "verify":
+		//TODO: Verify Secret
 		return nil
 	default:
-		return fmt.Errorf("unknown profile verb %s", verb)
+		return fmt.Errorf("unknown secret verb %s", verb)
 
 	}
 }

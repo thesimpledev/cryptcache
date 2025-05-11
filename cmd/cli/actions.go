@@ -12,8 +12,8 @@ func createProject(project *project) error {
 		"title":    project.name,
 		"profiles": []string{project.profile},
 		fmt.Sprintf("%s.encryption", project.profile): map[string]any{
-			"public_key_path":  project.public_key_path,
-			"private_key_path": project.private_key_path,
+			"public_key_path":  project.public_key,
+			"private_key_path": project.private_key,
 		},
 	}
 
