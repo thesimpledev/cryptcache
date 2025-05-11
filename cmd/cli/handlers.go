@@ -72,6 +72,9 @@ func profileHandler(verb string, args []string) error {
 		return fmt.Errorf("no Project Found")
 	}
 
+	//add check value in so only the same key can modify this profile
+	//When updating key reencrypt all values
+
 	switch verb {
 	case "create":
 		return nil
