@@ -11,6 +11,8 @@ type project struct {
 	profile     string
 	private_key string
 	public_key  string
+	help        bool
+	helpLong    bool
 }
 
 type profile struct {
@@ -40,17 +42,14 @@ func projectHandler(verb string, args []string) error {
 	fs.StringVar(&projectOptions.private_key, "pk", "", "Private Key Path")
 	fs.StringVar(&projectOptions.public_key, "pub", "", "Public Key Path")
 
-	fs.Usage = func() {
-		fmt.Println("Usage for: cryptcache project", verb)
-		fs.PrintDefaults()
+	if verb == "-h" || verb == "--help" || verb == "help" {
+		helpProfile()
 	}
 
 	if err := fs.Parse(args); err != nil {
-		if errors.Is(err, flag.ErrHelp) {
-			return nil // Showed help, don’t treat as a failure
-		}
 		return fmt.Errorf("failed to parse flags: %w", err)
 	}
+
 	if projectOptions.name == "" {
 		return errors.New("project name cannot be empty set with -n flag")
 	}
@@ -177,18 +176,4 @@ func keypairHandler(verb string, args []string) error {
 	default:
 		return fmt.Errorf("unknown keypair verb %s", verb)
 	}
-}
-
-func helpHandler() {
-	fmt.Println("Commands:")
-	fmt.Println("  create project    Create a new CryptCache project with the specified profile and keys")
-	fmt.Println("      -n            Project name (required)")
-	fmt.Println("      -p            Profile name (required)")
-	fmt.Println("      -pk           Path to Ed25519 private key file (required)")
-	fmt.Println("      -pub          Path to Ed25519 public key file or URL (required)")
-	fmt.Println()
-	fmt.Println("  create keypair    Generates an Ed25519 keypair in the current directory")
-	fmt.Println("                    Files: 'id_ed25519' (private), 'id_ed25519.pub' (public)")
-	fmt.Println()
-	fmt.Println("⚠️  Make sure to secure 'id_ed25519' and avoid committing it to version control.")
 }

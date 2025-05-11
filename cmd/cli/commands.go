@@ -13,14 +13,42 @@ var nouns = map[string]func(string, []string) error{
 	"keypair": keypairHandler,
 }
 
+var helpers = map[string]func(){
+	"project": helpProject,
+	"profile": helpProfile,
+	"secret":  helpSecret,
+	"keypair": helpKeypair,
+}
+
 func parse() error {
-	err := commandLenValidator(len(os.Args))
-	if err != nil {
-		return err
+	length := len(os.Args)
+
+	if length < 2 {
+		return errors.New("expected a verb (e.g., create, delete, update, merge)")
+	}
+
+	verb := os.Args[1]
+
+	if isHelpFlag(verb) {
+		helpHandler()
+		return nil
+	}
+
+	if length < 3 {
+		return errors.New("expected a noun (e.g., project, profile, value)")
 	}
 
 	noun := os.Args[2]
-	verb := os.Args[1]
+
+	if isHelpFlag(noun) {
+		helpCmd, exists := helpers[verb]
+		if !exists {
+			return fmt.Errorf("unknown noun %s", verb)
+		}
+
+		helpCmd()
+	}
+
 	args := os.Args[3:]
 
 	cmd, exists := nouns[noun]
@@ -29,21 +57,6 @@ func parse() error {
 		return fmt.Errorf("unknown noun %s", noun)
 	}
 
-	err = cmd(verb, args)
-
-	return err
-}
-
-func commandLenValidator(length int) error {
-	errorMessages := map[int]string{
-		1: "expected a noun (e.g., project, profile, value)",
-		2: "expected a verb (e.g., create, delete, update, merge)",
-	}
-
-	if msg, ok := errorMessages[length]; ok {
-		return errors.New(msg)
-	}
-
-	return nil
+	return cmd(verb, args)
 
 }

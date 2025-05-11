@@ -164,3 +164,13 @@ func resolveKey(input string) ([]byte, error) {
 		return data, nil
 	}
 }
+
+func isHelpFlag(value string) bool {
+	var helpFlags = []string{"help", "--help", "-h"}
+	for _, flag := range helpFlags {
+		if value == flag {
+			return true
+		}
+	}
+	return false
+}
