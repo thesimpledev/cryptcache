@@ -10,6 +10,7 @@ var nouns = map[string]func(string, []string) error{
 	"project": projectHandler,
 	"profile": profileHandler,
 	"secret":  secretHandler,
+	"keypair": keypairHandler,
 }
 
 func parse() error {
@@ -37,7 +38,6 @@ func commandLenValidator(length int) error {
 	errorMessages := map[int]string{
 		1: "expected a noun (e.g., project, profile, value)",
 		2: "expected a verb (e.g., create, delete, update, merge)",
-		3: "expected one or more arguments",
 	}
 
 	if msg, ok := errorMessages[length]; ok {

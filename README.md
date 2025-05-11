@@ -48,6 +48,12 @@ A vault to manage sensitive information such as API keys and credentials in a wa
 ```TOML
 title = "Crypt Cache"
 
+profiles = ['Production']
+
+['Production.encryption']
+private_key_path = 'pkpath'
+public_key_path = 'https://helloworld.com'
+
 [Production.username]
 value = "admin"
 encrypted = false
@@ -58,7 +64,7 @@ value = "kJlweiur82ljslakdj=="
 encrypted = true
 hmac  = "7c3f39e9c5df2e65dff9e8d41e1cf2b3ef57a63a12e01452db6ef7df8f7a09c8"
 
-[file.metadata]
+[Production.validation]
 hmac = "2d2e3b4f5a6e7c8d9f0e1d3c4b5a6f7d8c9e0f1a2b3c4d5e6f7e0f1a2d3c4b5a"
 
 ```
