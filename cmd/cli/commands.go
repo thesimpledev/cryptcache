@@ -18,14 +18,14 @@ func parse() error {
 		return err
 	}
 
-	noun := os.Args[1]
-	verb := os.Args[2]
+	noun := os.Args[2]
+	verb := os.Args[1]
 	args := os.Args[3:]
 
 	cmd, exists := nouns[noun]
 
 	if !exists {
-		return fmt.Errorf("unknown Noun %s", noun)
+		return fmt.Errorf("unknown noun %s", noun)
 	}
 
 	err = cmd(verb, args)

@@ -1,18 +1,14 @@
 package main
 
 import (
-	"log/slog"
+	"fmt"
 	"os"
 )
 
 func main() {
 
-	logger := slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{
-		AddSource: true,
-	}))
-
 	if err := parse(); err != nil {
-		logger.Error("Command failed", "error", err)
+		fmt.Fprintf(os.Stderr, "Command Failed: %v\n", err)
 		os.Exit(1)
 	}
 
