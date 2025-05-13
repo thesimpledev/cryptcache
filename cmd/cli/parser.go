@@ -48,6 +48,12 @@ func parse() error {
 
 	noun := os.Args[2]
 
+	// This is a bit messy so let me explain the logic.
+	// This is so users can pass in `cryptcache project help`
+	// since we pass in `verb noun` it first checks if the noun
+	// is help then if it is it looks up the help function for the verb
+	// There is probably a cleaner way to do this but it works for now
+	// while I work out what I want the end cli command setup to look like.
 	if isHelpFlag(noun) {
 		helpCmd, exists := helpers[verb]
 		if !exists {
@@ -55,6 +61,7 @@ func parse() error {
 		}
 
 		helpCmd()
+		return nil
 	}
 
 	args := os.Args[3:]
