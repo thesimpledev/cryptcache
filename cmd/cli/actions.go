@@ -7,6 +7,12 @@ import (
 	"path/filepath"
 )
 
+// Actions contain pure business logic and are called from handlers.
+// This separation allows:
+// - Handlers to focus on CLI concerns (parsing, validation)
+// - Actions to focus on business logic (crypto, file operations)
+// - Easier testing of business logic without CLI dependencies
+
 func createProject(project *project) error {
 	data := map[string]any{
 		"title":    project.name,

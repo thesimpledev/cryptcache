@@ -28,6 +28,15 @@ type secret struct {
 	profile     string
 }
 
+// Handlers are responsible for:
+// 1. Parsing noun-specific flags (each noun has different requirements)
+// 2. Validating input for the specific noun/verb combination
+// 3. Routing to the appropriate action function
+//
+// This design keeps flag parsing close to the business logic that needs it,
+// rather than trying to create a generic flag parser that would be complex
+// and harder to maintain.
+
 func projectHandler(verb string, args []string) error {
 	if cryptcacheExists() {
 		return fmt.Errorf("project already exists")

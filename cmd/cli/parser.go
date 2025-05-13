@@ -20,6 +20,14 @@ var helpers = map[string]func(){
 	"keypair": helpKeypair,
 }
 
+// Command parsing follows a "verb noun" pattern (e.g., "create project")
+// for better UX, even though code is organized by noun.
+// This disconnect is intentional - commands should be memorable for users,
+// while code should be organized logically for developers.
+//
+// Help flags are checked on both verb and noun positions to allow:
+// - "cryptcache create help" (general create help)
+// - "cryptcache help project" or "cryptcache project help" (noun-specific help)
 func parse() error {
 	length := len(os.Args)
 
