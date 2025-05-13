@@ -11,8 +11,6 @@ type project struct {
 	profile     string
 	private_key string
 	public_key  string
-	help        bool
-	helpLong    bool
 }
 
 type profile struct {
@@ -72,7 +70,6 @@ func projectHandler(verb string, args []string) error {
 	default:
 		return fmt.Errorf("unknown project verb %s", verb)
 	}
-
 }
 
 func profileHandler(verb string, args []string) error {
@@ -91,36 +88,35 @@ func profileHandler(verb string, args []string) error {
 		return fmt.Errorf("failed to parse flags: %w", err)
 	}
 
-	//TODO: Add check value so only the same key can modify the profile outside of rotate
+	// TODO: Add check value so only the same key can modify the profile outside of rotate
 
 	switch verb {
 	case "create":
-		//TODO: Create New Profile
+		// TODO: Create New Profile
 		return nil
 	case "rotate":
-		//TODO: Roatete Encryption Keys, Update all Signatures and Values in Profile
+		// TODO: Roatete Encryption Keys, Update all Signatures and Values in Profile
 		return nil
 	case "delete":
-		//TODO: Delete profile requires private key
+		// TODO: Delete profile requires private key
 		return nil
 	case "export":
-		//TODO: Export to .env requires public key
-		//Will expand to other exports in the future
+		// TODO: Export to .env requires public key
+		// Will expand to other exports in the future
 		return nil
 	case "diff":
-		//TODO: Compare two profiles to see missing keys
+		// TODO: Compare two profiles to see missing keys
 		return nil
 	case "verify":
-		//TODO: Verify Profiles Cryptographic Signature
+		// TODO: Verify Profiles Cryptographic Signature
 		return nil
 	case "set":
-		//TODO: Set Active Profile
+		// TODO: Set Active Profile
 		return nil
 	default:
 		return fmt.Errorf("unknown profile verb %s", verb)
 
 	}
-
 }
 
 func secretHandler(verb string, args []string) error {
@@ -143,25 +139,25 @@ func secretHandler(verb string, args []string) error {
 		return fmt.Errorf("failed to parse flags: %w", err)
 	}
 
-	//encryption is a protected namespace
-	//Private and Public Key Optional if set in profile
-	//Has to have an active profile set or profile name passed in
+	// encryption is a protected namespace
+	// Private and Public Key Optional if set in profile
+	// Has to have an active profile set or profile name passed in
 
 	switch verb {
 	case "create":
-		//TODO: Create new Secret (Encrypted or Unencrypted)
+		// TODO: Create new Secret (Encrypted or Unencrypted)
 		return nil
 	case "update":
-		//TODO: Update Secrete
+		// TODO: Update Secrete
 		return nil
 	case "delete":
-		//TODO: Delete Secret - Requires private key
+		// TODO: Delete Secret - Requires private key
 		return nil
 	case "view":
-		//TODO: View Secret - Requires public key
+		// TODO: View Secret - Requires public key
 		return nil
 	case "verify":
-		//TODO: Verify Secret
+		// TODO: Verify Secret
 		return nil
 	default:
 		return fmt.Errorf("unknown secret verb %s", verb)
