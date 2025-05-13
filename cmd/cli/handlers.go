@@ -4,6 +4,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"strings"
 )
 
 type project struct {
@@ -181,4 +182,31 @@ func keypairHandler(verb string, args []string) error {
 	default:
 		return fmt.Errorf("unknown keypair verb %s", verb)
 	}
+}
+
+//TODO: Not currently in use but more robust error handling to be implemented.
+// May want to abstract it more so we can pass in groups of items to validate
+// Would be nice to send in a structure that has all of these items
+// Maybe create a struct to hold the value, flag, and error message in an array of structs
+
+func (p *project) validate() error {
+	var errs []string
+
+	if p.name == "" {
+		errs = append(errs, "project name is required (-n flag)")
+	}
+	if p.profile == "" {
+		errs = append(errs, "profile name is required (-p flag)")
+	}
+	if p.private_key == "" {
+		errs = append(errs, "private key path is required (-pk flag)")
+	}
+	if p.public_key == "" {
+		errs = append(errs, "public key path is required (-pub flag)")
+	}
+
+	if len(errs) > 0 {
+		return fmt.Errorf("validation failed: %s", strings.Join(errs, "; "))
+	}
+	return nil
 }

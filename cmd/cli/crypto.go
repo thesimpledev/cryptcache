@@ -70,3 +70,21 @@ func resolveKey(input string) ([]byte, error) {
 		return data, nil
 	}
 }
+
+func validateEd25519Key(key []byte, isPrivate bool) error {
+	expectedSize := ed25519.PublicKeySize
+	if isPrivate {
+		expectedSize = ed25519.PrivateKeySize
+	}
+
+	if len(key) != expectedSize {
+		return fmt.Errorf("invalid key size: expected %d bytes, got %d", expectedSize, len(key))
+	}
+	return nil
+}
+
+func secureWipe(data []byte) {
+	for i := range data {
+		data[i] = 0
+	}
+}
