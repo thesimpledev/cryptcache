@@ -13,6 +13,8 @@ var nouns = map[string]func(string, []string) error{
 	"keypair": keypairHandler,
 }
 
+//It will probably be helpful to use a Registry pattern to simplify this in a bit
+
 var helpers = map[string]func(){
 	"project": helpProject,
 	"profile": helpProfile,
